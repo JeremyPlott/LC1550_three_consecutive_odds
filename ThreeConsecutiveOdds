@@ -1,0 +1,65 @@
+# Intuition
+Ideally we only want to loop over an array once, and exit as soon as a solution is found. 
+
+# Approach
+Traverse the array and count when there are 3 in a row. This can be done pretty simply by incrementing a variable on each odd number as we loop through, resetting it back to 0 if we hit an even. If we count to 3 we immediately exit.
+
+# Complexity
+- Time complexity:
+$$O(n)$$
+
+- Space complexity:
+$$O(n)$$
+
+# Code
+```
+public class Solution 
+{
+    public bool ThreeConsecutiveOdds(int[] arr) 
+    {
+        var consecutiveOdds = 0;
+        foreach (var num in arr)
+        {            
+            if (num % 2 == 0)
+            {
+                consecutiveOdds = 0;
+                continue;
+            }
+
+            consecutiveOdds++;
+            if (consecutiveOdds == 3) return true;
+        }
+
+        return false;
+    }
+}
+```
+
+```
+public class Solution 
+{
+    //this uses a pattern where we use 'continue' and 'return' to control how deep through the code we go on each iteration.
+    //it looks nice and clean by reducing the amount of if/else brackets
+    //the downside is that it can be confusing if you miss seeing a continue or return.
+    public bool ThreeConsecutiveOdds(int[] arr) 
+    {
+        var consecutiveOdds = 0;
+        foreach (var num in arr)
+        {            
+            if (num % 2 == 0) //use modulus to check if it is even
+            {
+                consecutiveOdds = 0;
+                continue; //it's even, so just move on to the next number.
+            }
+
+            //because of the 'continue' above, it is only possible for odd numbers to reach these lines. 
+            //it could just as well be put into an else-block instead of using 'continue', but then we'd have nested ifs which is a little more cluttered.
+            consecutiveOdds++;
+            if (consecutiveOdds == 3) return true; //no point finishing the iteration if it has already passed
+        }
+
+        //because of the 'return true' above, this can only be reached if we have finished iterating the array and did not find 3 odds in a row.
+        return false;
+    }
+}
+```
